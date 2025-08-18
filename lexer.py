@@ -23,7 +23,8 @@ class Lexer(sly.Lexer):
 
         ##Extensión
 
-        'DOWHILE','SWITCH'
+        'DOWHILE',
+        'SWITCH','CASE','DEFAULT','BREAK'
 
     }
 
@@ -69,8 +70,11 @@ class Lexer(sly.Lexer):
             'true': 'TRUE',
             'void': 'VOID',
             'while': 'WHILE',
-            'do-while': 'DOWHILE',
+            'do': 'DOWHILE',
             'switch': 'SWITCH',
+            'case': 'CASE',
+            'default': 'DEFAULT',
+            'break': 'BREAK',
         }
         if kw in keywords:
             t.type = keywords[kw]
