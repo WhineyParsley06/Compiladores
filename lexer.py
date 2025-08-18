@@ -139,9 +139,9 @@ class Lexer(sly.Lexer):
             t.value = raw
         return t
 
-    def error(self, t):
-        print(f"Line {self.lineno}: Bad character '{t.value[0]}'")
-        self.index += 1
+    # def error(self, t):
+    #     print(f"Line {self.lineno}: Bad character '{t.value[0]}'")
+    #     self.index += 1
 
 
 def tokenize(txt: str):
@@ -152,8 +152,9 @@ def tokenize(txt: str):
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) != 2:
-        print("usage: python lexer.py filename")
+    print(sys.argv)
+    if len(sys.argv) != 3 or sys.argv[1] != "--scan":
+        print("usage: python lexer.py --scan filename")
         sys.exit(1)
-    with open(sys.argv[1], encoding='utf-8') as f:
+    with open(sys.argv[2], encoding='utf-8') as f:
         tokenize(f.read())
