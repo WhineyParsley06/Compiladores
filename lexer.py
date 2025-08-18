@@ -20,6 +20,11 @@ class Lexer(sly.Lexer):
 
         # Operadores lógicos / relacionales / unarios
         'LOR', 'LAND', 'EQ', 'NE', 'LT', 'LE', 'GT', 'GE', 'INC', 'DEC', 'NOT',
+
+        ##Extensión
+
+        'DOWHILE','SWITCH'
+
     }
 
     # Símbolos de un carácter
@@ -64,6 +69,8 @@ class Lexer(sly.Lexer):
             'true': 'TRUE',
             'void': 'VOID',
             'while': 'WHILE',
+            'do-while': 'DOWHILE',
+            'switch': 'SWITCH',
         }
         if kw in keywords:
             t.type = keywords[kw]
