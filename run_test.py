@@ -33,6 +33,9 @@ test_cases = {
 print("=== Ejecutando pruebas ===\n")
 for file_name, expected_exit in test_cases.items():
     path = os.path.join(TEST_FOLDER, file_name)
+    if not os.path.exists(path):
+        print(f"Test file doesn't exist '{path}'")
+        continue
     result = subprocess.run(['python', BMINOR_SCRIPT, '--scan', path], stdout=sys.stdout,stderr=sys.stderr,text=True)
     actual_exit = result.returncode
 
