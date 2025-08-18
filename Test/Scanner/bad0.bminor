@@ -1,0 +1,6 @@
+x: integer = 42;
+
+main: function void () = {
+    y @ z = 10;
+    resultado # = x + 5;
+}
