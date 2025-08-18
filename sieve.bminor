@@ -8,6 +8,13 @@
  * ========================================================================== *
  */
 
+switch (expression)
+{
+    case constant_expression:
+        break;
+    default:
+}
+
 N: integer = 100;
 isprime: array [N] boolean;
 
