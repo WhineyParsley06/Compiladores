@@ -1,0 +1,8 @@
+x: integer = 42;
+y: boolean = true;
+
+main: function void () = {
+    if (x >= 40) {
+        print "OK";
+    }
+}
