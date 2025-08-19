@@ -2,7 +2,6 @@ import subprocess
 import os
 import sys
 
-# Ruta a tu script y carpeta de pruebas. Ejecutar desde carpeta raiz
 BMINOR_SCRIPT = 'bminor.py'
 TEST_FOLDER = os.path.join('test', 'scanner')
 
@@ -18,19 +17,20 @@ test_cases = {
     'good7.bminor': 0,
     'good8.bminor': 0,
     'good9.bminor': 0,
-    'bad0.bminor': 0,
-    'bad1.bminor': 0,
-    'bad2.bminor': 0,
-    'bad3.bminor': 0,
-    'bad4.bminor': 0,
-    'bad5.bminor': 0,
-    'bad6.bminor': 0,
-    'bad7.bminor': 0,
-    'bad8.bminor': 0,
-    'bad9.bminor': 0,
+    
+    'bad0.bminor': 1,
+    'bad1.bminor': 1,
+    'bad2.bminor': 1,
+    'bad3.bminor': 1,
+    'bad4.bminor': 1,
+    'bad5.bminor': 1,
+    'bad6.bminor': 1,
+    'bad7.bminor': 1,
+    'bad8.bminor': 1,
+    'bad9.bminor': 1,
 }
 
-print("=== Ejecutando pruebas ===\n")
+print("Running tests...\n")
 for file_name, expected_exit in test_cases.items():
     path = os.path.join(TEST_FOLDER, file_name)
     if not os.path.exists(path):
@@ -40,4 +40,4 @@ for file_name, expected_exit in test_cases.items():
     actual_exit = result.returncode
 
     status = 'OK' if actual_exit == expected_exit else 'ERROR'
-    print(f"\n{file_name}: esperado={expected_exit}, obtenido={actual_exit} → {status}\n")
+    print(f"{file_name}: Expected={expected_exit}, Actual={actual_exit} → {status}")

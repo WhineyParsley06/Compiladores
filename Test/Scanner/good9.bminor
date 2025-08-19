@@ -1,0 +1,9 @@
+/*
+   Comentario tipo C (varias líneas)
+   Aquí puedes escribir lo que quieras
+*/
+
+function void main() {
+    integer x = 10; // comentario al final de la línea
+    print(x);       /* comentario al final */
+}

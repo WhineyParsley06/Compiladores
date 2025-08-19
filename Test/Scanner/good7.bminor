@@ -1,0 +1,14 @@
+main: function void () = {
+    option: integer = 2;    
+    switch (option) {
+        case 1:
+            print "El uno";
+            break;
+        case 2:
+            print "El dos";
+            break;
+        default:
+            print "No tratado";
+            break;
+    }
+}

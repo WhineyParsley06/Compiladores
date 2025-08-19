@@ -1,0 +1,4 @@
+function void main() {
+    integer unaVariableMuyPeroMuyMuyGrandeParaVerSiHayProblema = 123;
+    print(unaVariableMuyPeroMuyMuyGrandeParaVerSiHayProblema);
+}

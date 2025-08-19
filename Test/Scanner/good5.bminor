@@ -1,0 +1,10 @@
+main: function void () = {
+    x: integer = 0;
+    y: integer = 1;
+    a: integer = 5;
+    b: integer = 3;
+    
+    x = x++ + y; 
+    a = a-- - b;  
+    x = x + 1;     
+}

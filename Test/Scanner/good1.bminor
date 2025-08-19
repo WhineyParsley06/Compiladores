@@ -1,0 +1,10 @@
+
+main: function void () = {
+    float a=1.0; 
+    float b=.25; 
+    float c=1e10; 
+    float d=1.5e-3; 
+    float e=.5E+2; 
+    float f=0e0;
+}
+

@@ -115,8 +115,14 @@ class Lexer(sly.Lexer):
     @_(r'!')
     def NOT(self, t): return t
 
+    # Float mal formado (1..0)
+    @_(r'\.\.')
+    def FLOAT_ERROR(self, t):
+        print(f"Mal formed {t.lineno}")
+        return None
+
     # === Literales ===
-    @_(r'(?:(?:\d+\.\d*|\.\d+)(?:[eE][+-]?\d+)?|\d+[eE][+-]?\d+)')
+    @_(r'(?:(?:\d+\.\d+|\.\d+)(?:[eE][+-]?\d+)?|\d+[eE][+-]?\d+)')
     def FLOAT_LITERAL(self, t):
         try:
             t.value = float(t.value)
@@ -149,11 +155,9 @@ class Lexer(sly.Lexer):
         except Exception:
             t.value = raw
         return t
-
-    # def error(self, t):
-    #     print(f"Line {self.lineno}: Bad character '{t.value[0]}'")
-    #     self.index += 1
-
+    
+    def error(self, t):
+        raise Exception(f"Lexical error at line {self.lineno}: illegal character '{t.value[0]}'")
 
 def tokenize(txt: str):
     lexer = Lexer()

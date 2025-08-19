@@ -1,0 +1,7 @@
+main: function void () = {
+    nl: char = '\n';
+    q: char = '\'';
+    tab: char = '\t';
+    s: string = "hola\tmundo\n";
+    u: string = "\"entre comillas\"";
+}
