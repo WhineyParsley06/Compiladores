@@ -13,7 +13,7 @@ def scan_file(filename):
     lexer = Lexer()
     try:
         for token in lexer.tokenize(data):
-            """print(token)"""
+            print(token)
         sys.exit(0)
     except Exception as e:
         print(f"    {e}", file=sys.stderr)
