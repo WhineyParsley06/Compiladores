@@ -154,6 +154,10 @@ class Lexer(sly.Lexer):
             t.value = raw
         return t
     
+    @_(r'/\*[^*]*$')
+    def UNCLOSED_COMMENT(self, t):
+        return self.error(t)
+    
     def error(self, t):
         raise Exception(f"Lexical error at line {self.lineno}: illegal character '{t.value[0]}'")
 

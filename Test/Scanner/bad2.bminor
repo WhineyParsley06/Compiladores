@@ -2,5 +2,5 @@ function void main() {
     integer x = 10;
     print(x);
     
-    /* Comentario que no cierra.
+    /* Comentario que no cierra
 }
