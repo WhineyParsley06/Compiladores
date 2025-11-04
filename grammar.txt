@@ -1,0 +1,3245 @@
+Grammar:
+
+Rule 0     S' -> prog
+Rule 1     prog -> decl_list
+Rule 2     decl_list -> empty
+Rule 3     decl_list -> decl decl_list
+Rule 4     decl -> decl_init
+Rule 5     decl -> ID : type_array ;
+Rule 6     decl -> ID : type_func ;
+Rule 7     decl -> ID : type_array_sized ;
+Rule 8     decl -> ID : type_simple ;
+Rule 9     decl_init -> ID : type_func = { opt_stmt_list }
+Rule 10    decl_init -> ID : type_array_sized = { opt_expr_list } ;
+Rule 11    decl_init -> ID : type_simple = expr ;
+Rule 12    opt_stmt_list -> empty
+Rule 13    opt_stmt_list -> stmt_list
+Rule 14    stmt_list -> stmt
+Rule 15    stmt_list -> stmt stmt_list
+Rule 16    stmt -> closed_stmt
+Rule 17    stmt -> open_stmt
+Rule 18    closed_stmt -> simple_stmt
+Rule 19    closed_stmt -> for_stmt_closed
+Rule 20    closed_stmt -> if_stmt_closed
+Rule 21    open_stmt -> for_stmt_open
+Rule 22    open_stmt -> if_stmt_open
+Rule 23    if_cond -> IF ( opt_expr )
+Rule 24    if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt
+Rule 25    if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open
+Rule 26    if_stmt_open -> if_cond stmt
+Rule 27    for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+Rule 28    for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+Rule 29    simple_stmt -> expr ;
+Rule 30    simple_stmt -> decl
+Rule 31    simple_stmt -> { opt_stmt_list }
+Rule 32    simple_stmt -> PRINT opt_expr_list ;
+Rule 33    simple_stmt -> RETURN opt_expr ;
+Rule 34    expr -> expr1
+Rule 35    expr1 -> expr2
+Rule 36    expr1 -> lval = expr1
+Rule 37    expr2 -> expr2 / factor
+Rule 38    expr2 -> expr2 * factor
+Rule 39    expr2 -> expr2 - factor
+Rule 40    expr2 -> expr2 + factor
+Rule 41    expr2 -> factor
+Rule 42    lval -> ID [ expr ]
+Rule 43    lval -> ID
+Rule 44    group -> ID ( opt_expr_list )
+Rule 45    group -> ( expr )
+Rule 46    factor -> FALSE
+Rule 47    factor -> TRUE
+Rule 48    factor -> STRING_LITERAL
+Rule 49    factor -> CHAR_LITERAL
+Rule 50    factor -> FLOAT_LITERAL
+Rule 51    factor -> INT_LITERAL
+Rule 52    factor -> ID
+Rule 53    type_simple -> VOID
+Rule 54    type_simple -> STRING
+Rule 55    type_simple -> CHAR
+Rule 56    type_simple -> BOOLEAN
+Rule 57    type_simple -> FLOAT
+Rule 58    type_simple -> INTEGER
+Rule 59    type_array -> ARRAY [ ] type_simple
+Rule 60    type_array_sized -> ARRAY [ expr ] type_simple
+Rule 61    type_func -> FUNCTION type_array_sized ( opt_param_list )
+Rule 62    type_func -> FUNCTION type_simple ( opt_param_list )
+Rule 63    opt_param_list -> empty
+Rule 64    opt_param_list -> param_list
+Rule 65    param_list -> param
+Rule 66    param_list -> param , param_list
+Rule 67    param -> ID : type_array_sized
+Rule 68    param -> ID : type_array
+Rule 69    param -> ID : type_simple
+Rule 70    opt_expr_list -> empty
+Rule 71    opt_expr_list -> expr_list
+Rule 72    expr_list -> expr
+Rule 73    expr_list -> expr , expr_list
+Rule 74    opt_expr -> empty
+Rule 75    opt_expr -> expr
+Rule 76    empty -> <empty>
+
+Unused terminals:
+
+    LAND
+    GT
+    WHILE
+    LT
+    NOT
+    DEFAULT
+    GE
+    DEC
+    SWITCH
+    INC
+    LE
+    LOR
+    EQ
+    CASE
+    DOWHILE
+    AUTO
+    NE
+    BREAK
+
+Terminals, with rules where they appear:
+
+(                    : 23 27 28 44 45 61 62
+)                    : 23 27 28 44 45 61 62
+*                    : 38
++                    : 40
+,                    : 66 73
+-                    : 39
+/                    : 37
+:                    : 5 6 7 8 9 10 11 67 68 69
+;                    : 5 6 7 8 10 11 27 27 28 28 29 32 33
+=                    : 9 10 11 36
+ARRAY                : 59 60
+AUTO                 : 
+BOOLEAN              : 56
+BREAK                : 
+CASE                 : 
+CHAR                 : 55
+CHAR_LITERAL         : 49
+DEC                  : 
+DEFAULT              : 
+DOWHILE              : 
+ELSE                 : 24 25
+EQ                   : 
+FALSE                : 46
+FLOAT                : 57
+FLOAT_LITERAL        : 50
+FOR                  : 27 28
+FUNCTION             : 61 62
+GE                   : 
+GT                   : 
+ID                   : 5 6 7 8 9 10 11 42 43 44 52 67 68 69
+IF                   : 23
+INC                  : 
+INTEGER              : 58
+INT_LITERAL          : 51
+LAND                 : 
+LE                   : 
+LOR                  : 
+LT                   : 
+NE                   : 
+NOT                  : 
+PRINT                : 32
+RETURN               : 33
+STRING               : 54
+STRING_LITERAL       : 48
+SWITCH               : 
+TRUE                 : 47
+VOID                 : 53
+WHILE                : 
+[                    : 42 59 60
+]                    : 42 59 60
+error                : 
+{                    : 9 10 31
+}                    : 9 10 31
+
+Nonterminals, with rules where they appear:
+
+closed_stmt          : 16 24 24 25 27
+decl                 : 3 30
+decl_init            : 4
+decl_list            : 1 3
+empty                : 2 12 63 70 74
+expr                 : 11 29 42 45 60 72 73 75
+expr1                : 34 36
+expr2                : 35 37 38 39 40
+expr_list            : 71 73
+factor               : 37 38 39 40 41
+for_stmt_closed      : 19
+for_stmt_open        : 21
+group                : 
+if_cond              : 24 25 26
+if_stmt_closed       : 20
+if_stmt_open         : 22 25
+lval                 : 36
+open_stmt            : 17
+opt_expr             : 23 27 27 27 28 28 28 33
+opt_expr_list        : 10 32 44
+opt_param_list       : 61 62
+opt_stmt_list        : 9 31
+param                : 65 66
+param_list           : 64 66
+prog                 : 0
+simple_stmt          : 18
+stmt                 : 14 15 26 28
+stmt_list            : 13 15
+type_array           : 5 68
+type_array_sized     : 7 10 61 67
+type_func            : 6 9
+type_simple          : 8 11 59 60 62 69
+
+
+state 0
+
+    (0) S' -> . prog
+    (1) prog -> . decl_list
+    (2) decl_list -> . empty
+    (3) decl_list -> . decl decl_list
+    (76) empty -> .
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    $end            reduce using rule 76 (empty -> .)
+    ID              shift and go to state 6
+
+    prog                           shift and go to state 1
+    decl_list                      shift and go to state 2
+    empty                          shift and go to state 3
+    decl                           shift and go to state 4
+    decl_init                      shift and go to state 5
+
+state 1
+
+    (0) S' -> prog .
+
+
+state 2
+
+    (1) prog -> decl_list .
+    $end            reduce using rule 1 (prog -> decl_list .)
+
+
+state 3
+
+    (2) decl_list -> empty .
+    $end            reduce using rule 2 (decl_list -> empty .)
+
+
+state 4
+
+    (3) decl_list -> decl . decl_list
+    (2) decl_list -> . empty
+    (3) decl_list -> . decl decl_list
+    (76) empty -> .
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    $end            reduce using rule 76 (empty -> .)
+    ID              shift and go to state 6
+
+    decl                           shift and go to state 4
+    decl_list                      shift and go to state 7
+    empty                          shift and go to state 3
+    decl_init                      shift and go to state 5
+
+state 5
+
+    (4) decl -> decl_init .
+    ID              reduce using rule 4 (decl -> decl_init .)
+    $end            reduce using rule 4 (decl -> decl_init .)
+    {               reduce using rule 4 (decl -> decl_init .)
+    PRINT           reduce using rule 4 (decl -> decl_init .)
+    RETURN          reduce using rule 4 (decl -> decl_init .)
+    FOR             reduce using rule 4 (decl -> decl_init .)
+    IF              reduce using rule 4 (decl -> decl_init .)
+    FALSE           reduce using rule 4 (decl -> decl_init .)
+    TRUE            reduce using rule 4 (decl -> decl_init .)
+    STRING_LITERAL  reduce using rule 4 (decl -> decl_init .)
+    CHAR_LITERAL    reduce using rule 4 (decl -> decl_init .)
+    FLOAT_LITERAL   reduce using rule 4 (decl -> decl_init .)
+    INT_LITERAL     reduce using rule 4 (decl -> decl_init .)
+    }               reduce using rule 4 (decl -> decl_init .)
+    ELSE            reduce using rule 4 (decl -> decl_init .)
+
+
+state 6
+
+    (5) decl -> ID . : type_array ;
+    (6) decl -> ID . : type_func ;
+    (7) decl -> ID . : type_array_sized ;
+    (8) decl -> ID . : type_simple ;
+    (9) decl_init -> ID . : type_func = { opt_stmt_list }
+    (10) decl_init -> ID . : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> ID . : type_simple = expr ;
+    :               shift and go to state 8
+
+
+state 7
+
+    (3) decl_list -> decl decl_list .
+    $end            reduce using rule 3 (decl_list -> decl decl_list .)
+
+
+state 8
+
+    (5) decl -> ID : . type_array ;
+    (6) decl -> ID : . type_func ;
+    (7) decl -> ID : . type_array_sized ;
+    (8) decl -> ID : . type_simple ;
+    (9) decl_init -> ID : . type_func = { opt_stmt_list }
+    (10) decl_init -> ID : . type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> ID : . type_simple = expr ;
+    (59) type_array -> . ARRAY [ ] type_simple
+    (61) type_func -> . FUNCTION type_array_sized ( opt_param_list )
+    (62) type_func -> . FUNCTION type_simple ( opt_param_list )
+    (60) type_array_sized -> . ARRAY [ expr ] type_simple
+    (53) type_simple -> . VOID
+    (54) type_simple -> . STRING
+    (55) type_simple -> . CHAR
+    (56) type_simple -> . BOOLEAN
+    (57) type_simple -> . FLOAT
+    (58) type_simple -> . INTEGER
+    ARRAY           shift and go to state 13
+    FUNCTION        shift and go to state 14
+    VOID            shift and go to state 15
+    STRING          shift and go to state 16
+    CHAR            shift and go to state 17
+    BOOLEAN         shift and go to state 18
+    FLOAT           shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    type_array                     shift and go to state 9
+    type_func                      shift and go to state 10
+    type_array_sized               shift and go to state 11
+    type_simple                    shift and go to state 12
+
+state 9
+
+    (5) decl -> ID : type_array . ;
+    ;               shift and go to state 21
+
+
+state 10
+
+    (6) decl -> ID : type_func . ;
+    (9) decl_init -> ID : type_func . = { opt_stmt_list }
+    ;               shift and go to state 22
+    =               shift and go to state 23
+
+
+state 11
+
+    (7) decl -> ID : type_array_sized . ;
+    (10) decl_init -> ID : type_array_sized . = { opt_expr_list } ;
+    ;               shift and go to state 24
+    =               shift and go to state 25
+
+
+state 12
+
+    (8) decl -> ID : type_simple . ;
+    (11) decl_init -> ID : type_simple . = expr ;
+    ;               shift and go to state 26
+    =               shift and go to state 27
+
+
+state 13
+
+    (59) type_array -> ARRAY . [ ] type_simple
+    (60) type_array_sized -> ARRAY . [ expr ] type_simple
+    [               shift and go to state 28
+
+
+state 14
+
+    (61) type_func -> FUNCTION . type_array_sized ( opt_param_list )
+    (62) type_func -> FUNCTION . type_simple ( opt_param_list )
+    (60) type_array_sized -> . ARRAY [ expr ] type_simple
+    (53) type_simple -> . VOID
+    (54) type_simple -> . STRING
+    (55) type_simple -> . CHAR
+    (56) type_simple -> . BOOLEAN
+    (57) type_simple -> . FLOAT
+    (58) type_simple -> . INTEGER
+    ARRAY           shift and go to state 31
+    VOID            shift and go to state 15
+    STRING          shift and go to state 16
+    CHAR            shift and go to state 17
+    BOOLEAN         shift and go to state 18
+    FLOAT           shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    type_array_sized               shift and go to state 29
+    type_simple                    shift and go to state 30
+
+state 15
+
+    (53) type_simple -> VOID .
+    ;               reduce using rule 53 (type_simple -> VOID .)
+    =               reduce using rule 53 (type_simple -> VOID .)
+    (               reduce using rule 53 (type_simple -> VOID .)
+    ,               reduce using rule 53 (type_simple -> VOID .)
+    )               reduce using rule 53 (type_simple -> VOID .)
+
+
+state 16
+
+    (54) type_simple -> STRING .
+    ;               reduce using rule 54 (type_simple -> STRING .)
+    =               reduce using rule 54 (type_simple -> STRING .)
+    (               reduce using rule 54 (type_simple -> STRING .)
+    ,               reduce using rule 54 (type_simple -> STRING .)
+    )               reduce using rule 54 (type_simple -> STRING .)
+
+
+state 17
+
+    (55) type_simple -> CHAR .
+    ;               reduce using rule 55 (type_simple -> CHAR .)
+    =               reduce using rule 55 (type_simple -> CHAR .)
+    (               reduce using rule 55 (type_simple -> CHAR .)
+    ,               reduce using rule 55 (type_simple -> CHAR .)
+    )               reduce using rule 55 (type_simple -> CHAR .)
+
+
+state 18
+
+    (56) type_simple -> BOOLEAN .
+    ;               reduce using rule 56 (type_simple -> BOOLEAN .)
+    =               reduce using rule 56 (type_simple -> BOOLEAN .)
+    (               reduce using rule 56 (type_simple -> BOOLEAN .)
+    ,               reduce using rule 56 (type_simple -> BOOLEAN .)
+    )               reduce using rule 56 (type_simple -> BOOLEAN .)
+
+
+state 19
+
+    (57) type_simple -> FLOAT .
+    ;               reduce using rule 57 (type_simple -> FLOAT .)
+    =               reduce using rule 57 (type_simple -> FLOAT .)
+    (               reduce using rule 57 (type_simple -> FLOAT .)
+    ,               reduce using rule 57 (type_simple -> FLOAT .)
+    )               reduce using rule 57 (type_simple -> FLOAT .)
+
+
+state 20
+
+    (58) type_simple -> INTEGER .
+    ;               reduce using rule 58 (type_simple -> INTEGER .)
+    =               reduce using rule 58 (type_simple -> INTEGER .)
+    (               reduce using rule 58 (type_simple -> INTEGER .)
+    ,               reduce using rule 58 (type_simple -> INTEGER .)
+    )               reduce using rule 58 (type_simple -> INTEGER .)
+
+
+state 21
+
+    (5) decl -> ID : type_array ; .
+    ID              reduce using rule 5 (decl -> ID : type_array ; .)
+    $end            reduce using rule 5 (decl -> ID : type_array ; .)
+    {               reduce using rule 5 (decl -> ID : type_array ; .)
+    PRINT           reduce using rule 5 (decl -> ID : type_array ; .)
+    RETURN          reduce using rule 5 (decl -> ID : type_array ; .)
+    FOR             reduce using rule 5 (decl -> ID : type_array ; .)
+    IF              reduce using rule 5 (decl -> ID : type_array ; .)
+    FALSE           reduce using rule 5 (decl -> ID : type_array ; .)
+    TRUE            reduce using rule 5 (decl -> ID : type_array ; .)
+    STRING_LITERAL  reduce using rule 5 (decl -> ID : type_array ; .)
+    CHAR_LITERAL    reduce using rule 5 (decl -> ID : type_array ; .)
+    FLOAT_LITERAL   reduce using rule 5 (decl -> ID : type_array ; .)
+    INT_LITERAL     reduce using rule 5 (decl -> ID : type_array ; .)
+    }               reduce using rule 5 (decl -> ID : type_array ; .)
+    ELSE            reduce using rule 5 (decl -> ID : type_array ; .)
+
+
+state 22
+
+    (6) decl -> ID : type_func ; .
+    ID              reduce using rule 6 (decl -> ID : type_func ; .)
+    $end            reduce using rule 6 (decl -> ID : type_func ; .)
+    {               reduce using rule 6 (decl -> ID : type_func ; .)
+    PRINT           reduce using rule 6 (decl -> ID : type_func ; .)
+    RETURN          reduce using rule 6 (decl -> ID : type_func ; .)
+    FOR             reduce using rule 6 (decl -> ID : type_func ; .)
+    IF              reduce using rule 6 (decl -> ID : type_func ; .)
+    FALSE           reduce using rule 6 (decl -> ID : type_func ; .)
+    TRUE            reduce using rule 6 (decl -> ID : type_func ; .)
+    STRING_LITERAL  reduce using rule 6 (decl -> ID : type_func ; .)
+    CHAR_LITERAL    reduce using rule 6 (decl -> ID : type_func ; .)
+    FLOAT_LITERAL   reduce using rule 6 (decl -> ID : type_func ; .)
+    INT_LITERAL     reduce using rule 6 (decl -> ID : type_func ; .)
+    }               reduce using rule 6 (decl -> ID : type_func ; .)
+    ELSE            reduce using rule 6 (decl -> ID : type_func ; .)
+
+
+state 23
+
+    (9) decl_init -> ID : type_func = . { opt_stmt_list }
+    {               shift and go to state 32
+
+
+state 24
+
+    (7) decl -> ID : type_array_sized ; .
+    ID              reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    $end            reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    {               reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    PRINT           reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    RETURN          reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    FOR             reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    IF              reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    FALSE           reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    TRUE            reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    STRING_LITERAL  reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    CHAR_LITERAL    reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    FLOAT_LITERAL   reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    INT_LITERAL     reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    }               reduce using rule 7 (decl -> ID : type_array_sized ; .)
+    ELSE            reduce using rule 7 (decl -> ID : type_array_sized ; .)
+
+
+state 25
+
+    (10) decl_init -> ID : type_array_sized = . { opt_expr_list } ;
+    {               shift and go to state 33
+
+
+state 26
+
+    (8) decl -> ID : type_simple ; .
+    ID              reduce using rule 8 (decl -> ID : type_simple ; .)
+    $end            reduce using rule 8 (decl -> ID : type_simple ; .)
+    {               reduce using rule 8 (decl -> ID : type_simple ; .)
+    PRINT           reduce using rule 8 (decl -> ID : type_simple ; .)
+    RETURN          reduce using rule 8 (decl -> ID : type_simple ; .)
+    FOR             reduce using rule 8 (decl -> ID : type_simple ; .)
+    IF              reduce using rule 8 (decl -> ID : type_simple ; .)
+    FALSE           reduce using rule 8 (decl -> ID : type_simple ; .)
+    TRUE            reduce using rule 8 (decl -> ID : type_simple ; .)
+    STRING_LITERAL  reduce using rule 8 (decl -> ID : type_simple ; .)
+    CHAR_LITERAL    reduce using rule 8 (decl -> ID : type_simple ; .)
+    FLOAT_LITERAL   reduce using rule 8 (decl -> ID : type_simple ; .)
+    INT_LITERAL     reduce using rule 8 (decl -> ID : type_simple ; .)
+    }               reduce using rule 8 (decl -> ID : type_simple ; .)
+    ELSE            reduce using rule 8 (decl -> ID : type_simple ; .)
+
+
+state 27
+
+    (11) decl_init -> ID : type_simple = . expr ;
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    expr                           shift and go to state 35
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 28
+
+    (59) type_array -> ARRAY [ . ] type_simple
+    (60) type_array_sized -> ARRAY [ . expr ] type_simple
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ]               shift and go to state 46
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    expr                           shift and go to state 47
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 29
+
+    (61) type_func -> FUNCTION type_array_sized . ( opt_param_list )
+    (               shift and go to state 48
+
+
+state 30
+
+    (62) type_func -> FUNCTION type_simple . ( opt_param_list )
+    (               shift and go to state 49
+
+
+state 31
+
+    (60) type_array_sized -> ARRAY . [ expr ] type_simple
+    [               shift and go to state 50
+
+
+state 32
+
+    (9) decl_init -> ID : type_func = { . opt_stmt_list }
+    (12) opt_stmt_list -> . empty
+    (13) opt_stmt_list -> . stmt_list
+    (76) empty -> .
+    (14) stmt_list -> . stmt
+    (15) stmt_list -> . stmt stmt_list
+    (16) stmt -> . closed_stmt
+    (17) stmt -> . open_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (21) open_stmt -> . for_stmt_open
+    (22) open_stmt -> . if_stmt_open
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (28) for_stmt_open -> . FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    }               reduce using rule 76 (empty -> .)
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 68
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_stmt_list                  shift and go to state 53
+    empty                          shift and go to state 54
+    stmt_list                      shift and go to state 55
+    stmt                           shift and go to state 56
+    closed_stmt                    shift and go to state 57
+    open_stmt                      shift and go to state 58
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    for_stmt_open                  shift and go to state 62
+    if_stmt_open                   shift and go to state 63
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    if_cond                        shift and go to state 69
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 33
+
+    (10) decl_init -> ID : type_array_sized = { . opt_expr_list } ;
+    (70) opt_expr_list -> . empty
+    (71) opt_expr_list -> . expr_list
+    (76) empty -> .
+    (72) expr_list -> . expr
+    (73) expr_list -> . expr , expr_list
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    }               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr_list                  shift and go to state 71
+    empty                          shift and go to state 72
+    expr_list                      shift and go to state 73
+    expr                           shift and go to state 74
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 34
+
+    (42) lval -> ID . [ expr ]
+    (43) lval -> ID .
+    (52) factor -> ID .
+    [               shift and go to state 75
+    =               reduce using rule 43 (lval -> ID .)
+    /               reduce using rule 52 (factor -> ID .)
+    *               reduce using rule 52 (factor -> ID .)
+    -               reduce using rule 52 (factor -> ID .)
+    +               reduce using rule 52 (factor -> ID .)
+    ;               reduce using rule 52 (factor -> ID .)
+    ]               reduce using rule 52 (factor -> ID .)
+    ,               reduce using rule 52 (factor -> ID .)
+    }               reduce using rule 52 (factor -> ID .)
+    )               reduce using rule 52 (factor -> ID .)
+
+
+state 35
+
+    (11) decl_init -> ID : type_simple = expr . ;
+    ;               shift and go to state 76
+
+
+state 36
+
+    (34) expr -> expr1 .
+    ;               reduce using rule 34 (expr -> expr1 .)
+    ]               reduce using rule 34 (expr -> expr1 .)
+    ,               reduce using rule 34 (expr -> expr1 .)
+    }               reduce using rule 34 (expr -> expr1 .)
+    )               reduce using rule 34 (expr -> expr1 .)
+
+
+state 37
+
+    (35) expr1 -> expr2 .
+    (37) expr2 -> expr2 . / factor
+    (38) expr2 -> expr2 . * factor
+    (39) expr2 -> expr2 . - factor
+    (40) expr2 -> expr2 . + factor
+    ;               reduce using rule 35 (expr1 -> expr2 .)
+    ]               reduce using rule 35 (expr1 -> expr2 .)
+    ,               reduce using rule 35 (expr1 -> expr2 .)
+    }               reduce using rule 35 (expr1 -> expr2 .)
+    )               reduce using rule 35 (expr1 -> expr2 .)
+    /               shift and go to state 77
+    *               shift and go to state 78
+    -               shift and go to state 79
+    +               shift and go to state 80
+
+
+state 38
+
+    (36) expr1 -> lval . = expr1
+    =               shift and go to state 81
+
+
+state 39
+
+    (41) expr2 -> factor .
+    /               reduce using rule 41 (expr2 -> factor .)
+    *               reduce using rule 41 (expr2 -> factor .)
+    -               reduce using rule 41 (expr2 -> factor .)
+    +               reduce using rule 41 (expr2 -> factor .)
+    ;               reduce using rule 41 (expr2 -> factor .)
+    ]               reduce using rule 41 (expr2 -> factor .)
+    ,               reduce using rule 41 (expr2 -> factor .)
+    }               reduce using rule 41 (expr2 -> factor .)
+    )               reduce using rule 41 (expr2 -> factor .)
+
+
+state 40
+
+    (46) factor -> FALSE .
+    /               reduce using rule 46 (factor -> FALSE .)
+    *               reduce using rule 46 (factor -> FALSE .)
+    -               reduce using rule 46 (factor -> FALSE .)
+    +               reduce using rule 46 (factor -> FALSE .)
+    ;               reduce using rule 46 (factor -> FALSE .)
+    ]               reduce using rule 46 (factor -> FALSE .)
+    ,               reduce using rule 46 (factor -> FALSE .)
+    }               reduce using rule 46 (factor -> FALSE .)
+    )               reduce using rule 46 (factor -> FALSE .)
+
+
+state 41
+
+    (47) factor -> TRUE .
+    /               reduce using rule 47 (factor -> TRUE .)
+    *               reduce using rule 47 (factor -> TRUE .)
+    -               reduce using rule 47 (factor -> TRUE .)
+    +               reduce using rule 47 (factor -> TRUE .)
+    ;               reduce using rule 47 (factor -> TRUE .)
+    ]               reduce using rule 47 (factor -> TRUE .)
+    ,               reduce using rule 47 (factor -> TRUE .)
+    }               reduce using rule 47 (factor -> TRUE .)
+    )               reduce using rule 47 (factor -> TRUE .)
+
+
+state 42
+
+    (48) factor -> STRING_LITERAL .
+    /               reduce using rule 48 (factor -> STRING_LITERAL .)
+    *               reduce using rule 48 (factor -> STRING_LITERAL .)
+    -               reduce using rule 48 (factor -> STRING_LITERAL .)
+    +               reduce using rule 48 (factor -> STRING_LITERAL .)
+    ;               reduce using rule 48 (factor -> STRING_LITERAL .)
+    ]               reduce using rule 48 (factor -> STRING_LITERAL .)
+    ,               reduce using rule 48 (factor -> STRING_LITERAL .)
+    }               reduce using rule 48 (factor -> STRING_LITERAL .)
+    )               reduce using rule 48 (factor -> STRING_LITERAL .)
+
+
+state 43
+
+    (49) factor -> CHAR_LITERAL .
+    /               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    *               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    -               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    +               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    ;               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    ]               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    ,               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    }               reduce using rule 49 (factor -> CHAR_LITERAL .)
+    )               reduce using rule 49 (factor -> CHAR_LITERAL .)
+
+
+state 44
+
+    (50) factor -> FLOAT_LITERAL .
+    /               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    *               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    -               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    +               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    ;               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    ]               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    ,               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    }               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+    )               reduce using rule 50 (factor -> FLOAT_LITERAL .)
+
+
+state 45
+
+    (51) factor -> INT_LITERAL .
+    /               reduce using rule 51 (factor -> INT_LITERAL .)
+    *               reduce using rule 51 (factor -> INT_LITERAL .)
+    -               reduce using rule 51 (factor -> INT_LITERAL .)
+    +               reduce using rule 51 (factor -> INT_LITERAL .)
+    ;               reduce using rule 51 (factor -> INT_LITERAL .)
+    ]               reduce using rule 51 (factor -> INT_LITERAL .)
+    ,               reduce using rule 51 (factor -> INT_LITERAL .)
+    }               reduce using rule 51 (factor -> INT_LITERAL .)
+    )               reduce using rule 51 (factor -> INT_LITERAL .)
+
+
+state 46
+
+    (59) type_array -> ARRAY [ ] . type_simple
+    (53) type_simple -> . VOID
+    (54) type_simple -> . STRING
+    (55) type_simple -> . CHAR
+    (56) type_simple -> . BOOLEAN
+    (57) type_simple -> . FLOAT
+    (58) type_simple -> . INTEGER
+    VOID            shift and go to state 15
+    STRING          shift and go to state 16
+    CHAR            shift and go to state 17
+    BOOLEAN         shift and go to state 18
+    FLOAT           shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    type_simple                    shift and go to state 82
+
+state 47
+
+    (60) type_array_sized -> ARRAY [ expr . ] type_simple
+    ]               shift and go to state 83
+
+
+state 48
+
+    (61) type_func -> FUNCTION type_array_sized ( . opt_param_list )
+    (63) opt_param_list -> . empty
+    (64) opt_param_list -> . param_list
+    (76) empty -> .
+    (65) param_list -> . param
+    (66) param_list -> . param , param_list
+    (67) param -> . ID : type_array_sized
+    (68) param -> . ID : type_array
+    (69) param -> . ID : type_simple
+    )               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 88
+
+    opt_param_list                 shift and go to state 84
+    empty                          shift and go to state 85
+    param_list                     shift and go to state 86
+    param                          shift and go to state 87
+
+state 49
+
+    (62) type_func -> FUNCTION type_simple ( . opt_param_list )
+    (63) opt_param_list -> . empty
+    (64) opt_param_list -> . param_list
+    (76) empty -> .
+    (65) param_list -> . param
+    (66) param_list -> . param , param_list
+    (67) param -> . ID : type_array_sized
+    (68) param -> . ID : type_array
+    (69) param -> . ID : type_simple
+    )               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 88
+
+    opt_param_list                 shift and go to state 89
+    empty                          shift and go to state 85
+    param_list                     shift and go to state 86
+    param                          shift and go to state 87
+
+state 50
+
+    (60) type_array_sized -> ARRAY [ . expr ] type_simple
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    expr                           shift and go to state 47
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 51
+
+    (5) decl -> ID . : type_array ;
+    (6) decl -> ID . : type_func ;
+    (7) decl -> ID . : type_array_sized ;
+    (8) decl -> ID . : type_simple ;
+    (9) decl_init -> ID . : type_func = { opt_stmt_list }
+    (10) decl_init -> ID . : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> ID . : type_simple = expr ;
+    (42) lval -> ID . [ expr ]
+    (43) lval -> ID .
+    (52) factor -> ID .
+    :               shift and go to state 8
+    [               shift and go to state 75
+    =               reduce using rule 43 (lval -> ID .)
+    /               reduce using rule 52 (factor -> ID .)
+    *               reduce using rule 52 (factor -> ID .)
+    -               reduce using rule 52 (factor -> ID .)
+    +               reduce using rule 52 (factor -> ID .)
+    ;               reduce using rule 52 (factor -> ID .)
+
+
+state 52
+
+    (31) simple_stmt -> { . opt_stmt_list }
+    (12) opt_stmt_list -> . empty
+    (13) opt_stmt_list -> . stmt_list
+    (76) empty -> .
+    (14) stmt_list -> . stmt
+    (15) stmt_list -> . stmt stmt_list
+    (16) stmt -> . closed_stmt
+    (17) stmt -> . open_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (21) open_stmt -> . for_stmt_open
+    (22) open_stmt -> . if_stmt_open
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (28) for_stmt_open -> . FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    }               reduce using rule 76 (empty -> .)
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 68
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_stmt_list                  shift and go to state 90
+    empty                          shift and go to state 54
+    stmt_list                      shift and go to state 55
+    stmt                           shift and go to state 56
+    closed_stmt                    shift and go to state 57
+    open_stmt                      shift and go to state 58
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    for_stmt_open                  shift and go to state 62
+    if_stmt_open                   shift and go to state 63
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    if_cond                        shift and go to state 69
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 53
+
+    (9) decl_init -> ID : type_func = { opt_stmt_list . }
+    }               shift and go to state 91
+
+
+state 54
+
+    (12) opt_stmt_list -> empty .
+    }               reduce using rule 12 (opt_stmt_list -> empty .)
+
+
+state 55
+
+    (13) opt_stmt_list -> stmt_list .
+    }               reduce using rule 13 (opt_stmt_list -> stmt_list .)
+
+
+state 56
+
+    (14) stmt_list -> stmt .
+    (15) stmt_list -> stmt . stmt_list
+    (14) stmt_list -> . stmt
+    (15) stmt_list -> . stmt stmt_list
+    (16) stmt -> . closed_stmt
+    (17) stmt -> . open_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (21) open_stmt -> . for_stmt_open
+    (22) open_stmt -> . if_stmt_open
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (28) for_stmt_open -> . FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    }               reduce using rule 14 (stmt_list -> stmt .)
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 68
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    stmt                           shift and go to state 56
+    stmt_list                      shift and go to state 92
+    closed_stmt                    shift and go to state 57
+    open_stmt                      shift and go to state 58
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    for_stmt_open                  shift and go to state 62
+    if_stmt_open                   shift and go to state 63
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    if_cond                        shift and go to state 69
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 57
+
+    (16) stmt -> closed_stmt .
+    {               reduce using rule 16 (stmt -> closed_stmt .)
+    PRINT           reduce using rule 16 (stmt -> closed_stmt .)
+    RETURN          reduce using rule 16 (stmt -> closed_stmt .)
+    FOR             reduce using rule 16 (stmt -> closed_stmt .)
+    ID              reduce using rule 16 (stmt -> closed_stmt .)
+    IF              reduce using rule 16 (stmt -> closed_stmt .)
+    FALSE           reduce using rule 16 (stmt -> closed_stmt .)
+    TRUE            reduce using rule 16 (stmt -> closed_stmt .)
+    STRING_LITERAL  reduce using rule 16 (stmt -> closed_stmt .)
+    CHAR_LITERAL    reduce using rule 16 (stmt -> closed_stmt .)
+    FLOAT_LITERAL   reduce using rule 16 (stmt -> closed_stmt .)
+    INT_LITERAL     reduce using rule 16 (stmt -> closed_stmt .)
+    }               reduce using rule 16 (stmt -> closed_stmt .)
+
+
+state 58
+
+    (17) stmt -> open_stmt .
+    {               reduce using rule 17 (stmt -> open_stmt .)
+    PRINT           reduce using rule 17 (stmt -> open_stmt .)
+    RETURN          reduce using rule 17 (stmt -> open_stmt .)
+    FOR             reduce using rule 17 (stmt -> open_stmt .)
+    ID              reduce using rule 17 (stmt -> open_stmt .)
+    IF              reduce using rule 17 (stmt -> open_stmt .)
+    FALSE           reduce using rule 17 (stmt -> open_stmt .)
+    TRUE            reduce using rule 17 (stmt -> open_stmt .)
+    STRING_LITERAL  reduce using rule 17 (stmt -> open_stmt .)
+    CHAR_LITERAL    reduce using rule 17 (stmt -> open_stmt .)
+    FLOAT_LITERAL   reduce using rule 17 (stmt -> open_stmt .)
+    INT_LITERAL     reduce using rule 17 (stmt -> open_stmt .)
+    }               reduce using rule 17 (stmt -> open_stmt .)
+
+
+state 59
+
+    (18) closed_stmt -> simple_stmt .
+    {               reduce using rule 18 (closed_stmt -> simple_stmt .)
+    PRINT           reduce using rule 18 (closed_stmt -> simple_stmt .)
+    RETURN          reduce using rule 18 (closed_stmt -> simple_stmt .)
+    FOR             reduce using rule 18 (closed_stmt -> simple_stmt .)
+    ID              reduce using rule 18 (closed_stmt -> simple_stmt .)
+    IF              reduce using rule 18 (closed_stmt -> simple_stmt .)
+    FALSE           reduce using rule 18 (closed_stmt -> simple_stmt .)
+    TRUE            reduce using rule 18 (closed_stmt -> simple_stmt .)
+    STRING_LITERAL  reduce using rule 18 (closed_stmt -> simple_stmt .)
+    CHAR_LITERAL    reduce using rule 18 (closed_stmt -> simple_stmt .)
+    FLOAT_LITERAL   reduce using rule 18 (closed_stmt -> simple_stmt .)
+    INT_LITERAL     reduce using rule 18 (closed_stmt -> simple_stmt .)
+    }               reduce using rule 18 (closed_stmt -> simple_stmt .)
+    ELSE            reduce using rule 18 (closed_stmt -> simple_stmt .)
+
+
+state 60
+
+    (19) closed_stmt -> for_stmt_closed .
+    {               reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    PRINT           reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    RETURN          reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    FOR             reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    ID              reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    IF              reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    FALSE           reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    TRUE            reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    STRING_LITERAL  reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    CHAR_LITERAL    reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    FLOAT_LITERAL   reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    INT_LITERAL     reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    }               reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+    ELSE            reduce using rule 19 (closed_stmt -> for_stmt_closed .)
+
+
+state 61
+
+    (20) closed_stmt -> if_stmt_closed .
+    {               reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    PRINT           reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    RETURN          reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    FOR             reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    ID              reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    IF              reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    FALSE           reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    TRUE            reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    STRING_LITERAL  reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    CHAR_LITERAL    reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    FLOAT_LITERAL   reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    INT_LITERAL     reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    }               reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+    ELSE            reduce using rule 20 (closed_stmt -> if_stmt_closed .)
+
+
+state 62
+
+    (21) open_stmt -> for_stmt_open .
+    {               reduce using rule 21 (open_stmt -> for_stmt_open .)
+    PRINT           reduce using rule 21 (open_stmt -> for_stmt_open .)
+    RETURN          reduce using rule 21 (open_stmt -> for_stmt_open .)
+    FOR             reduce using rule 21 (open_stmt -> for_stmt_open .)
+    ID              reduce using rule 21 (open_stmt -> for_stmt_open .)
+    IF              reduce using rule 21 (open_stmt -> for_stmt_open .)
+    FALSE           reduce using rule 21 (open_stmt -> for_stmt_open .)
+    TRUE            reduce using rule 21 (open_stmt -> for_stmt_open .)
+    STRING_LITERAL  reduce using rule 21 (open_stmt -> for_stmt_open .)
+    CHAR_LITERAL    reduce using rule 21 (open_stmt -> for_stmt_open .)
+    FLOAT_LITERAL   reduce using rule 21 (open_stmt -> for_stmt_open .)
+    INT_LITERAL     reduce using rule 21 (open_stmt -> for_stmt_open .)
+    }               reduce using rule 21 (open_stmt -> for_stmt_open .)
+
+
+state 63
+
+    (22) open_stmt -> if_stmt_open .
+    {               reduce using rule 22 (open_stmt -> if_stmt_open .)
+    PRINT           reduce using rule 22 (open_stmt -> if_stmt_open .)
+    RETURN          reduce using rule 22 (open_stmt -> if_stmt_open .)
+    FOR             reduce using rule 22 (open_stmt -> if_stmt_open .)
+    ID              reduce using rule 22 (open_stmt -> if_stmt_open .)
+    IF              reduce using rule 22 (open_stmt -> if_stmt_open .)
+    FALSE           reduce using rule 22 (open_stmt -> if_stmt_open .)
+    TRUE            reduce using rule 22 (open_stmt -> if_stmt_open .)
+    STRING_LITERAL  reduce using rule 22 (open_stmt -> if_stmt_open .)
+    CHAR_LITERAL    reduce using rule 22 (open_stmt -> if_stmt_open .)
+    FLOAT_LITERAL   reduce using rule 22 (open_stmt -> if_stmt_open .)
+    INT_LITERAL     reduce using rule 22 (open_stmt -> if_stmt_open .)
+    }               reduce using rule 22 (open_stmt -> if_stmt_open .)
+
+
+state 64
+
+    (29) simple_stmt -> expr . ;
+    ;               shift and go to state 93
+
+
+state 65
+
+    (30) simple_stmt -> decl .
+    {               reduce using rule 30 (simple_stmt -> decl .)
+    PRINT           reduce using rule 30 (simple_stmt -> decl .)
+    RETURN          reduce using rule 30 (simple_stmt -> decl .)
+    FOR             reduce using rule 30 (simple_stmt -> decl .)
+    ID              reduce using rule 30 (simple_stmt -> decl .)
+    IF              reduce using rule 30 (simple_stmt -> decl .)
+    FALSE           reduce using rule 30 (simple_stmt -> decl .)
+    TRUE            reduce using rule 30 (simple_stmt -> decl .)
+    STRING_LITERAL  reduce using rule 30 (simple_stmt -> decl .)
+    CHAR_LITERAL    reduce using rule 30 (simple_stmt -> decl .)
+    FLOAT_LITERAL   reduce using rule 30 (simple_stmt -> decl .)
+    INT_LITERAL     reduce using rule 30 (simple_stmt -> decl .)
+    }               reduce using rule 30 (simple_stmt -> decl .)
+    ELSE            reduce using rule 30 (simple_stmt -> decl .)
+
+
+state 66
+
+    (32) simple_stmt -> PRINT . opt_expr_list ;
+    (70) opt_expr_list -> . empty
+    (71) opt_expr_list -> . expr_list
+    (76) empty -> .
+    (72) expr_list -> . expr
+    (73) expr_list -> . expr , expr_list
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ;               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr_list                  shift and go to state 94
+    empty                          shift and go to state 72
+    expr_list                      shift and go to state 73
+    expr                           shift and go to state 74
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 67
+
+    (33) simple_stmt -> RETURN . opt_expr ;
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ;               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 95
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 68
+
+    (27) for_stmt_closed -> FOR . ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (28) for_stmt_open -> FOR . ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (               shift and go to state 98
+
+
+state 69
+
+    (24) if_stmt_closed -> if_cond . closed_stmt ELSE closed_stmt
+    (25) if_stmt_open -> if_cond . closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> if_cond . stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (16) stmt -> . closed_stmt
+    (17) stmt -> . open_stmt
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (21) open_stmt -> . for_stmt_open
+    (22) open_stmt -> . if_stmt_open
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (28) for_stmt_open -> . FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 68
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    if_cond                        shift and go to state 69
+    closed_stmt                    shift and go to state 99
+    if_stmt_open                   shift and go to state 63
+    stmt                           shift and go to state 100
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    open_stmt                      shift and go to state 58
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    for_stmt_open                  shift and go to state 62
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 70
+
+    (23) if_cond -> IF . ( opt_expr )
+    (               shift and go to state 101
+
+
+state 71
+
+    (10) decl_init -> ID : type_array_sized = { opt_expr_list . } ;
+    }               shift and go to state 102
+
+
+state 72
+
+    (70) opt_expr_list -> empty .
+    }               reduce using rule 70 (opt_expr_list -> empty .)
+    ;               reduce using rule 70 (opt_expr_list -> empty .)
+
+
+state 73
+
+    (71) opt_expr_list -> expr_list .
+    }               reduce using rule 71 (opt_expr_list -> expr_list .)
+    ;               reduce using rule 71 (opt_expr_list -> expr_list .)
+
+
+state 74
+
+    (72) expr_list -> expr .
+    (73) expr_list -> expr . , expr_list
+    }               reduce using rule 72 (expr_list -> expr .)
+    ;               reduce using rule 72 (expr_list -> expr .)
+    ,               shift and go to state 103
+
+
+state 75
+
+    (42) lval -> ID [ . expr ]
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    expr                           shift and go to state 104
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 76
+
+    (11) decl_init -> ID : type_simple = expr ; .
+    ID              reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    $end            reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    {               reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    PRINT           reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    RETURN          reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    FOR             reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    IF              reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    FALSE           reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    TRUE            reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    STRING_LITERAL  reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    CHAR_LITERAL    reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    FLOAT_LITERAL   reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    INT_LITERAL     reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    }               reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+    ELSE            reduce using rule 11 (decl_init -> ID : type_simple = expr ; .)
+
+
+state 77
+
+    (37) expr2 -> expr2 / . factor
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+    ID              shift and go to state 106
+
+    factor                         shift and go to state 105
+
+state 78
+
+    (38) expr2 -> expr2 * . factor
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+    ID              shift and go to state 106
+
+    factor                         shift and go to state 107
+
+state 79
+
+    (39) expr2 -> expr2 - . factor
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+    ID              shift and go to state 106
+
+    factor                         shift and go to state 108
+
+state 80
+
+    (40) expr2 -> expr2 + . factor
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+    ID              shift and go to state 106
+
+    factor                         shift and go to state 109
+
+state 81
+
+    (36) expr1 -> lval = . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    lval                           shift and go to state 38
+    expr1                          shift and go to state 110
+    expr2                          shift and go to state 37
+    factor                         shift and go to state 39
+
+state 82
+
+    (59) type_array -> ARRAY [ ] type_simple .
+    ;               reduce using rule 59 (type_array -> ARRAY [ ] type_simple .)
+    ,               reduce using rule 59 (type_array -> ARRAY [ ] type_simple .)
+    )               reduce using rule 59 (type_array -> ARRAY [ ] type_simple .)
+
+
+state 83
+
+    (60) type_array_sized -> ARRAY [ expr ] . type_simple
+    (53) type_simple -> . VOID
+    (54) type_simple -> . STRING
+    (55) type_simple -> . CHAR
+    (56) type_simple -> . BOOLEAN
+    (57) type_simple -> . FLOAT
+    (58) type_simple -> . INTEGER
+    VOID            shift and go to state 15
+    STRING          shift and go to state 16
+    CHAR            shift and go to state 17
+    BOOLEAN         shift and go to state 18
+    FLOAT           shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    type_simple                    shift and go to state 111
+
+state 84
+
+    (61) type_func -> FUNCTION type_array_sized ( opt_param_list . )
+    )               shift and go to state 112
+
+
+state 85
+
+    (63) opt_param_list -> empty .
+    )               reduce using rule 63 (opt_param_list -> empty .)
+
+
+state 86
+
+    (64) opt_param_list -> param_list .
+    )               reduce using rule 64 (opt_param_list -> param_list .)
+
+
+state 87
+
+    (65) param_list -> param .
+    (66) param_list -> param . , param_list
+    )               reduce using rule 65 (param_list -> param .)
+    ,               shift and go to state 113
+
+
+state 88
+
+    (67) param -> ID . : type_array_sized
+    (68) param -> ID . : type_array
+    (69) param -> ID . : type_simple
+    :               shift and go to state 114
+
+
+state 89
+
+    (62) type_func -> FUNCTION type_simple ( opt_param_list . )
+    )               shift and go to state 115
+
+
+state 90
+
+    (31) simple_stmt -> { opt_stmt_list . }
+    }               shift and go to state 116
+
+
+state 91
+
+    (9) decl_init -> ID : type_func = { opt_stmt_list } .
+    ID              reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    $end            reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    {               reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    PRINT           reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    RETURN          reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    FOR             reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    IF              reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    FALSE           reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    TRUE            reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    STRING_LITERAL  reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    CHAR_LITERAL    reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    FLOAT_LITERAL   reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    INT_LITERAL     reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    }               reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+    ELSE            reduce using rule 9 (decl_init -> ID : type_func = { opt_stmt_list } .)
+
+
+state 92
+
+    (15) stmt_list -> stmt stmt_list .
+    }               reduce using rule 15 (stmt_list -> stmt stmt_list .)
+
+
+state 93
+
+    (29) simple_stmt -> expr ; .
+    {               reduce using rule 29 (simple_stmt -> expr ; .)
+    PRINT           reduce using rule 29 (simple_stmt -> expr ; .)
+    RETURN          reduce using rule 29 (simple_stmt -> expr ; .)
+    FOR             reduce using rule 29 (simple_stmt -> expr ; .)
+    ID              reduce using rule 29 (simple_stmt -> expr ; .)
+    IF              reduce using rule 29 (simple_stmt -> expr ; .)
+    FALSE           reduce using rule 29 (simple_stmt -> expr ; .)
+    TRUE            reduce using rule 29 (simple_stmt -> expr ; .)
+    STRING_LITERAL  reduce using rule 29 (simple_stmt -> expr ; .)
+    CHAR_LITERAL    reduce using rule 29 (simple_stmt -> expr ; .)
+    FLOAT_LITERAL   reduce using rule 29 (simple_stmt -> expr ; .)
+    INT_LITERAL     reduce using rule 29 (simple_stmt -> expr ; .)
+    }               reduce using rule 29 (simple_stmt -> expr ; .)
+    ELSE            reduce using rule 29 (simple_stmt -> expr ; .)
+
+
+state 94
+
+    (32) simple_stmt -> PRINT opt_expr_list . ;
+    ;               shift and go to state 117
+
+
+state 95
+
+    (33) simple_stmt -> RETURN opt_expr . ;
+    ;               shift and go to state 118
+
+
+state 96
+
+    (74) opt_expr -> empty .
+    ;               reduce using rule 74 (opt_expr -> empty .)
+    )               reduce using rule 74 (opt_expr -> empty .)
+
+
+state 97
+
+    (75) opt_expr -> expr .
+    ;               reduce using rule 75 (opt_expr -> expr .)
+    )               reduce using rule 75 (opt_expr -> expr .)
+
+
+state 98
+
+    (27) for_stmt_closed -> FOR ( . opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (28) for_stmt_open -> FOR ( . opt_expr ; opt_expr ; opt_expr ) stmt
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ;               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 119
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 99
+
+    (24) if_stmt_closed -> if_cond closed_stmt . ELSE closed_stmt
+    (25) if_stmt_open -> if_cond closed_stmt . ELSE if_stmt_open
+    (16) stmt -> closed_stmt .
+    ELSE            shift and go to state 120
+    {               reduce using rule 16 (stmt -> closed_stmt .)
+    PRINT           reduce using rule 16 (stmt -> closed_stmt .)
+    RETURN          reduce using rule 16 (stmt -> closed_stmt .)
+    FOR             reduce using rule 16 (stmt -> closed_stmt .)
+    ID              reduce using rule 16 (stmt -> closed_stmt .)
+    IF              reduce using rule 16 (stmt -> closed_stmt .)
+    FALSE           reduce using rule 16 (stmt -> closed_stmt .)
+    TRUE            reduce using rule 16 (stmt -> closed_stmt .)
+    STRING_LITERAL  reduce using rule 16 (stmt -> closed_stmt .)
+    CHAR_LITERAL    reduce using rule 16 (stmt -> closed_stmt .)
+    FLOAT_LITERAL   reduce using rule 16 (stmt -> closed_stmt .)
+    INT_LITERAL     reduce using rule 16 (stmt -> closed_stmt .)
+    }               reduce using rule 16 (stmt -> closed_stmt .)
+
+
+state 100
+
+    (26) if_stmt_open -> if_cond stmt .
+    {               reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    PRINT           reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    RETURN          reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    FOR             reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    ID              reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    IF              reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    FALSE           reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    TRUE            reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    STRING_LITERAL  reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    CHAR_LITERAL    reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    FLOAT_LITERAL   reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    INT_LITERAL     reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+    }               reduce using rule 26 (if_stmt_open -> if_cond stmt .)
+
+
+state 101
+
+    (23) if_cond -> IF ( . opt_expr )
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    )               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 121
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 102
+
+    (10) decl_init -> ID : type_array_sized = { opt_expr_list } . ;
+    ;               shift and go to state 122
+
+
+state 103
+
+    (73) expr_list -> expr , . expr_list
+    (72) expr_list -> . expr
+    (73) expr_list -> . expr , expr_list
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    expr                           shift and go to state 74
+    expr_list                      shift and go to state 123
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 104
+
+    (42) lval -> ID [ expr . ]
+    ]               shift and go to state 124
+
+
+state 105
+
+    (37) expr2 -> expr2 / factor .
+    /               reduce using rule 37 (expr2 -> expr2 / factor .)
+    *               reduce using rule 37 (expr2 -> expr2 / factor .)
+    -               reduce using rule 37 (expr2 -> expr2 / factor .)
+    +               reduce using rule 37 (expr2 -> expr2 / factor .)
+    ;               reduce using rule 37 (expr2 -> expr2 / factor .)
+    ]               reduce using rule 37 (expr2 -> expr2 / factor .)
+    ,               reduce using rule 37 (expr2 -> expr2 / factor .)
+    }               reduce using rule 37 (expr2 -> expr2 / factor .)
+    )               reduce using rule 37 (expr2 -> expr2 / factor .)
+
+
+state 106
+
+    (52) factor -> ID .
+    /               reduce using rule 52 (factor -> ID .)
+    *               reduce using rule 52 (factor -> ID .)
+    -               reduce using rule 52 (factor -> ID .)
+    +               reduce using rule 52 (factor -> ID .)
+    ;               reduce using rule 52 (factor -> ID .)
+    ]               reduce using rule 52 (factor -> ID .)
+    ,               reduce using rule 52 (factor -> ID .)
+    }               reduce using rule 52 (factor -> ID .)
+    )               reduce using rule 52 (factor -> ID .)
+
+
+state 107
+
+    (38) expr2 -> expr2 * factor .
+    /               reduce using rule 38 (expr2 -> expr2 * factor .)
+    *               reduce using rule 38 (expr2 -> expr2 * factor .)
+    -               reduce using rule 38 (expr2 -> expr2 * factor .)
+    +               reduce using rule 38 (expr2 -> expr2 * factor .)
+    ;               reduce using rule 38 (expr2 -> expr2 * factor .)
+    ]               reduce using rule 38 (expr2 -> expr2 * factor .)
+    ,               reduce using rule 38 (expr2 -> expr2 * factor .)
+    }               reduce using rule 38 (expr2 -> expr2 * factor .)
+    )               reduce using rule 38 (expr2 -> expr2 * factor .)
+
+
+state 108
+
+    (39) expr2 -> expr2 - factor .
+    /               reduce using rule 39 (expr2 -> expr2 - factor .)
+    *               reduce using rule 39 (expr2 -> expr2 - factor .)
+    -               reduce using rule 39 (expr2 -> expr2 - factor .)
+    +               reduce using rule 39 (expr2 -> expr2 - factor .)
+    ;               reduce using rule 39 (expr2 -> expr2 - factor .)
+    ]               reduce using rule 39 (expr2 -> expr2 - factor .)
+    ,               reduce using rule 39 (expr2 -> expr2 - factor .)
+    }               reduce using rule 39 (expr2 -> expr2 - factor .)
+    )               reduce using rule 39 (expr2 -> expr2 - factor .)
+
+
+state 109
+
+    (40) expr2 -> expr2 + factor .
+    /               reduce using rule 40 (expr2 -> expr2 + factor .)
+    *               reduce using rule 40 (expr2 -> expr2 + factor .)
+    -               reduce using rule 40 (expr2 -> expr2 + factor .)
+    +               reduce using rule 40 (expr2 -> expr2 + factor .)
+    ;               reduce using rule 40 (expr2 -> expr2 + factor .)
+    ]               reduce using rule 40 (expr2 -> expr2 + factor .)
+    ,               reduce using rule 40 (expr2 -> expr2 + factor .)
+    }               reduce using rule 40 (expr2 -> expr2 + factor .)
+    )               reduce using rule 40 (expr2 -> expr2 + factor .)
+
+
+state 110
+
+    (36) expr1 -> lval = expr1 .
+    ;               reduce using rule 36 (expr1 -> lval = expr1 .)
+    ]               reduce using rule 36 (expr1 -> lval = expr1 .)
+    ,               reduce using rule 36 (expr1 -> lval = expr1 .)
+    }               reduce using rule 36 (expr1 -> lval = expr1 .)
+    )               reduce using rule 36 (expr1 -> lval = expr1 .)
+
+
+state 111
+
+    (60) type_array_sized -> ARRAY [ expr ] type_simple .
+    ;               reduce using rule 60 (type_array_sized -> ARRAY [ expr ] type_simple .)
+    =               reduce using rule 60 (type_array_sized -> ARRAY [ expr ] type_simple .)
+    (               reduce using rule 60 (type_array_sized -> ARRAY [ expr ] type_simple .)
+    ,               reduce using rule 60 (type_array_sized -> ARRAY [ expr ] type_simple .)
+    )               reduce using rule 60 (type_array_sized -> ARRAY [ expr ] type_simple .)
+
+
+state 112
+
+    (61) type_func -> FUNCTION type_array_sized ( opt_param_list ) .
+    ;               reduce using rule 61 (type_func -> FUNCTION type_array_sized ( opt_param_list ) .)
+    =               reduce using rule 61 (type_func -> FUNCTION type_array_sized ( opt_param_list ) .)
+
+
+state 113
+
+    (66) param_list -> param , . param_list
+    (65) param_list -> . param
+    (66) param_list -> . param , param_list
+    (67) param -> . ID : type_array_sized
+    (68) param -> . ID : type_array
+    (69) param -> . ID : type_simple
+    ID              shift and go to state 88
+
+    param                          shift and go to state 87
+    param_list                     shift and go to state 125
+
+state 114
+
+    (67) param -> ID : . type_array_sized
+    (68) param -> ID : . type_array
+    (69) param -> ID : . type_simple
+    (60) type_array_sized -> . ARRAY [ expr ] type_simple
+    (59) type_array -> . ARRAY [ ] type_simple
+    (53) type_simple -> . VOID
+    (54) type_simple -> . STRING
+    (55) type_simple -> . CHAR
+    (56) type_simple -> . BOOLEAN
+    (57) type_simple -> . FLOAT
+    (58) type_simple -> . INTEGER
+    ARRAY           shift and go to state 129
+    VOID            shift and go to state 15
+    STRING          shift and go to state 16
+    CHAR            shift and go to state 17
+    BOOLEAN         shift and go to state 18
+    FLOAT           shift and go to state 19
+    INTEGER         shift and go to state 20
+
+    type_array_sized               shift and go to state 126
+    type_array                     shift and go to state 127
+    type_simple                    shift and go to state 128
+
+state 115
+
+    (62) type_func -> FUNCTION type_simple ( opt_param_list ) .
+    ;               reduce using rule 62 (type_func -> FUNCTION type_simple ( opt_param_list ) .)
+    =               reduce using rule 62 (type_func -> FUNCTION type_simple ( opt_param_list ) .)
+
+
+state 116
+
+    (31) simple_stmt -> { opt_stmt_list } .
+    {               reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    PRINT           reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    RETURN          reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    FOR             reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    ID              reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    IF              reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    FALSE           reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    TRUE            reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    STRING_LITERAL  reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    CHAR_LITERAL    reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    FLOAT_LITERAL   reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    INT_LITERAL     reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    }               reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+    ELSE            reduce using rule 31 (simple_stmt -> { opt_stmt_list } .)
+
+
+state 117
+
+    (32) simple_stmt -> PRINT opt_expr_list ; .
+    {               reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    PRINT           reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    RETURN          reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    FOR             reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    ID              reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    IF              reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    FALSE           reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    TRUE            reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    STRING_LITERAL  reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    CHAR_LITERAL    reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    FLOAT_LITERAL   reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    INT_LITERAL     reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    }               reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+    ELSE            reduce using rule 32 (simple_stmt -> PRINT opt_expr_list ; .)
+
+
+state 118
+
+    (33) simple_stmt -> RETURN opt_expr ; .
+    {               reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    PRINT           reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    RETURN          reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    FOR             reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    ID              reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    IF              reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    FALSE           reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    TRUE            reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    STRING_LITERAL  reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    CHAR_LITERAL    reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    FLOAT_LITERAL   reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    INT_LITERAL     reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    }               reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+    ELSE            reduce using rule 33 (simple_stmt -> RETURN opt_expr ; .)
+
+
+state 119
+
+    (27) for_stmt_closed -> FOR ( opt_expr . ; opt_expr ; opt_expr ) closed_stmt
+    (28) for_stmt_open -> FOR ( opt_expr . ; opt_expr ; opt_expr ) stmt
+    ;               shift and go to state 130
+
+
+state 120
+
+    (24) if_stmt_closed -> if_cond closed_stmt ELSE . closed_stmt
+    (25) if_stmt_open -> if_cond closed_stmt ELSE . if_stmt_open
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (23) if_cond -> . IF ( opt_expr )
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 134
+    IF              shift and go to state 70
+    ID              shift and go to state 51
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    if_cond                        shift and go to state 131
+    closed_stmt                    shift and go to state 132
+    if_stmt_open                   shift and go to state 133
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 121
+
+    (23) if_cond -> IF ( opt_expr . )
+    )               shift and go to state 135
+
+
+state 122
+
+    (10) decl_init -> ID : type_array_sized = { opt_expr_list } ; .
+    ID              reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    $end            reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    {               reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    PRINT           reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    RETURN          reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    FOR             reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    IF              reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    FALSE           reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    TRUE            reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    STRING_LITERAL  reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    CHAR_LITERAL    reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    FLOAT_LITERAL   reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    INT_LITERAL     reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    }               reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+    ELSE            reduce using rule 10 (decl_init -> ID : type_array_sized = { opt_expr_list } ; .)
+
+
+state 123
+
+    (73) expr_list -> expr , expr_list .
+    }               reduce using rule 73 (expr_list -> expr , expr_list .)
+    ;               reduce using rule 73 (expr_list -> expr , expr_list .)
+
+
+state 124
+
+    (42) lval -> ID [ expr ] .
+    =               reduce using rule 42 (lval -> ID [ expr ] .)
+
+
+state 125
+
+    (66) param_list -> param , param_list .
+    )               reduce using rule 66 (param_list -> param , param_list .)
+
+
+state 126
+
+    (67) param -> ID : type_array_sized .
+    ,               reduce using rule 67 (param -> ID : type_array_sized .)
+    )               reduce using rule 67 (param -> ID : type_array_sized .)
+
+
+state 127
+
+    (68) param -> ID : type_array .
+    ,               reduce using rule 68 (param -> ID : type_array .)
+    )               reduce using rule 68 (param -> ID : type_array .)
+
+
+state 128
+
+    (69) param -> ID : type_simple .
+    ,               reduce using rule 69 (param -> ID : type_simple .)
+    )               reduce using rule 69 (param -> ID : type_simple .)
+
+
+state 129
+
+    (60) type_array_sized -> ARRAY . [ expr ] type_simple
+    (59) type_array -> ARRAY . [ ] type_simple
+    [               shift and go to state 136
+
+
+state 130
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; . opt_expr ; opt_expr ) closed_stmt
+    (28) for_stmt_open -> FOR ( opt_expr ; . opt_expr ; opt_expr ) stmt
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ;               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 137
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 131
+
+    (25) if_stmt_open -> if_cond . closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> if_cond . stmt
+    (24) if_stmt_closed -> if_cond . closed_stmt ELSE closed_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (16) stmt -> . closed_stmt
+    (17) stmt -> . open_stmt
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (21) open_stmt -> . for_stmt_open
+    (22) open_stmt -> . if_stmt_open
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (28) for_stmt_open -> . FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 68
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    if_cond                        shift and go to state 69
+    closed_stmt                    shift and go to state 138
+    if_stmt_open                   shift and go to state 63
+    stmt                           shift and go to state 100
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    open_stmt                      shift and go to state 58
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    for_stmt_open                  shift and go to state 62
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 132
+
+    (24) if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .
+    {               reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    PRINT           reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    RETURN          reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    FOR             reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    ID              reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    IF              reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    FALSE           reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    TRUE            reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    STRING_LITERAL  reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    CHAR_LITERAL    reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    FLOAT_LITERAL   reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    INT_LITERAL     reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    }               reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+    ELSE            reduce using rule 24 (if_stmt_closed -> if_cond closed_stmt ELSE closed_stmt .)
+
+
+state 133
+
+    (25) if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .
+    {               reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    PRINT           reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    RETURN          reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    FOR             reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    ID              reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    IF              reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    FALSE           reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    TRUE            reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    STRING_LITERAL  reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    CHAR_LITERAL    reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    FLOAT_LITERAL   reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    INT_LITERAL     reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+    }               reduce using rule 25 (if_stmt_open -> if_cond closed_stmt ELSE if_stmt_open .)
+
+
+state 134
+
+    (27) for_stmt_closed -> FOR . ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (               shift and go to state 139
+
+
+state 135
+
+    (23) if_cond -> IF ( opt_expr ) .
+    {               reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    PRINT           reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    RETURN          reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    FOR             reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    ID              reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    IF              reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    FALSE           reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    TRUE            reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    STRING_LITERAL  reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    CHAR_LITERAL    reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    FLOAT_LITERAL   reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+    INT_LITERAL     reduce using rule 23 (if_cond -> IF ( opt_expr ) .)
+
+
+state 136
+
+    (60) type_array_sized -> ARRAY [ . expr ] type_simple
+    (59) type_array -> ARRAY [ . ] type_simple
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ]               shift and go to state 46
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    expr                           shift and go to state 47
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 137
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr . ; opt_expr ) closed_stmt
+    (28) for_stmt_open -> FOR ( opt_expr ; opt_expr . ; opt_expr ) stmt
+    ;               shift and go to state 140
+
+
+state 138
+
+    (25) if_stmt_open -> if_cond closed_stmt . ELSE if_stmt_open
+    (24) if_stmt_closed -> if_cond closed_stmt . ELSE closed_stmt
+    (16) stmt -> closed_stmt .
+    ELSE            shift and go to state 141
+    {               reduce using rule 16 (stmt -> closed_stmt .)
+    PRINT           reduce using rule 16 (stmt -> closed_stmt .)
+    RETURN          reduce using rule 16 (stmt -> closed_stmt .)
+    FOR             reduce using rule 16 (stmt -> closed_stmt .)
+    ID              reduce using rule 16 (stmt -> closed_stmt .)
+    IF              reduce using rule 16 (stmt -> closed_stmt .)
+    FALSE           reduce using rule 16 (stmt -> closed_stmt .)
+    TRUE            reduce using rule 16 (stmt -> closed_stmt .)
+    STRING_LITERAL  reduce using rule 16 (stmt -> closed_stmt .)
+    CHAR_LITERAL    reduce using rule 16 (stmt -> closed_stmt .)
+    FLOAT_LITERAL   reduce using rule 16 (stmt -> closed_stmt .)
+    INT_LITERAL     reduce using rule 16 (stmt -> closed_stmt .)
+    }               reduce using rule 16 (stmt -> closed_stmt .)
+
+
+state 139
+
+    (27) for_stmt_closed -> FOR ( . opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ;               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 142
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 140
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; . opt_expr ) closed_stmt
+    (28) for_stmt_open -> FOR ( opt_expr ; opt_expr ; . opt_expr ) stmt
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    )               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 143
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 141
+
+    (25) if_stmt_open -> if_cond closed_stmt ELSE . if_stmt_open
+    (24) if_stmt_closed -> if_cond closed_stmt ELSE . closed_stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (23) if_cond -> . IF ( opt_expr )
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    IF              shift and go to state 70
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 134
+    ID              shift and go to state 51
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    if_cond                        shift and go to state 131
+    closed_stmt                    shift and go to state 132
+    if_stmt_open                   shift and go to state 133
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 142
+
+    (27) for_stmt_closed -> FOR ( opt_expr . ; opt_expr ; opt_expr ) closed_stmt
+    ;               shift and go to state 144
+
+
+state 143
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr . ) closed_stmt
+    (28) for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr . ) stmt
+    )               shift and go to state 145
+
+
+state 144
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; . opt_expr ; opt_expr ) closed_stmt
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    ;               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 146
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 145
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) . closed_stmt
+    (28) for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) . stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (16) stmt -> . closed_stmt
+    (17) stmt -> . open_stmt
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (21) open_stmt -> . for_stmt_open
+    (22) open_stmt -> . if_stmt_open
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (28) for_stmt_open -> . FOR ( opt_expr ; opt_expr ; opt_expr ) stmt
+    (25) if_stmt_open -> . if_cond closed_stmt ELSE if_stmt_open
+    (26) if_stmt_open -> . if_cond stmt
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 68
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    closed_stmt                    shift and go to state 147
+    stmt                           shift and go to state 148
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    open_stmt                      shift and go to state 58
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    if_cond                        shift and go to state 69
+    for_stmt_open                  shift and go to state 62
+    if_stmt_open                   shift and go to state 63
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 146
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr . ; opt_expr ) closed_stmt
+    ;               shift and go to state 149
+
+
+state 147
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .
+    (16) stmt -> closed_stmt .
+  ! reduce/reduce conflict for { resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for PRINT resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for RETURN resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for FOR resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for ID resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for IF resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for FALSE resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for TRUE resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for STRING_LITERAL resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for CHAR_LITERAL resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for FLOAT_LITERAL resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for INT_LITERAL resolved using rule 16 (stmt -> closed_stmt .)
+  ! reduce/reduce conflict for } resolved using rule 16 (stmt -> closed_stmt .)
+    ELSE            reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    {               reduce using rule 16 (stmt -> closed_stmt .)
+    PRINT           reduce using rule 16 (stmt -> closed_stmt .)
+    RETURN          reduce using rule 16 (stmt -> closed_stmt .)
+    FOR             reduce using rule 16 (stmt -> closed_stmt .)
+    ID              reduce using rule 16 (stmt -> closed_stmt .)
+    IF              reduce using rule 16 (stmt -> closed_stmt .)
+    FALSE           reduce using rule 16 (stmt -> closed_stmt .)
+    TRUE            reduce using rule 16 (stmt -> closed_stmt .)
+    STRING_LITERAL  reduce using rule 16 (stmt -> closed_stmt .)
+    CHAR_LITERAL    reduce using rule 16 (stmt -> closed_stmt .)
+    FLOAT_LITERAL   reduce using rule 16 (stmt -> closed_stmt .)
+    INT_LITERAL     reduce using rule 16 (stmt -> closed_stmt .)
+    }               reduce using rule 16 (stmt -> closed_stmt .)
+
+
+state 148
+
+    (28) for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .
+    {               reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    PRINT           reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    RETURN          reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    FOR             reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    ID              reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    IF              reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    FALSE           reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    TRUE            reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    STRING_LITERAL  reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    CHAR_LITERAL    reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    FLOAT_LITERAL   reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    INT_LITERAL     reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+    }               reduce using rule 28 (for_stmt_open -> FOR ( opt_expr ; opt_expr ; opt_expr ) stmt .)
+
+
+state 149
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; . opt_expr ) closed_stmt
+    (74) opt_expr -> . empty
+    (75) opt_expr -> . expr
+    (76) empty -> .
+    (34) expr -> . expr1
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    )               reduce using rule 76 (empty -> .)
+    ID              shift and go to state 34
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    opt_expr                       shift and go to state 150
+    empty                          shift and go to state 96
+    expr                           shift and go to state 97
+    expr1                          shift and go to state 36
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 150
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr . ) closed_stmt
+    )               shift and go to state 151
+
+
+state 151
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) . closed_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 134
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    closed_stmt                    shift and go to state 152
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    if_cond                        shift and go to state 153
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 152
+
+    (27) for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .
+    {               reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    PRINT           reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    RETURN          reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    FOR             reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    ID              reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    IF              reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    FALSE           reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    TRUE            reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    STRING_LITERAL  reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    CHAR_LITERAL    reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    FLOAT_LITERAL   reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    INT_LITERAL     reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    }               reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+    ELSE            reduce using rule 27 (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt .)
+
+
+state 153
+
+    (24) if_stmt_closed -> if_cond . closed_stmt ELSE closed_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 134
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    if_cond                        shift and go to state 153
+    closed_stmt                    shift and go to state 154
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+state 154
+
+    (24) if_stmt_closed -> if_cond closed_stmt . ELSE closed_stmt
+    ELSE            shift and go to state 155
+
+
+state 155
+
+    (24) if_stmt_closed -> if_cond closed_stmt ELSE . closed_stmt
+    (18) closed_stmt -> . simple_stmt
+    (19) closed_stmt -> . for_stmt_closed
+    (20) closed_stmt -> . if_stmt_closed
+    (29) simple_stmt -> . expr ;
+    (30) simple_stmt -> . decl
+    (31) simple_stmt -> . { opt_stmt_list }
+    (32) simple_stmt -> . PRINT opt_expr_list ;
+    (33) simple_stmt -> . RETURN opt_expr ;
+    (27) for_stmt_closed -> . FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt
+    (24) if_stmt_closed -> . if_cond closed_stmt ELSE closed_stmt
+    (34) expr -> . expr1
+    (4) decl -> . decl_init
+    (5) decl -> . ID : type_array ;
+    (6) decl -> . ID : type_func ;
+    (7) decl -> . ID : type_array_sized ;
+    (8) decl -> . ID : type_simple ;
+    (23) if_cond -> . IF ( opt_expr )
+    (35) expr1 -> . expr2
+    (36) expr1 -> . lval = expr1
+    (9) decl_init -> . ID : type_func = { opt_stmt_list }
+    (10) decl_init -> . ID : type_array_sized = { opt_expr_list } ;
+    (11) decl_init -> . ID : type_simple = expr ;
+    (37) expr2 -> . expr2 / factor
+    (38) expr2 -> . expr2 * factor
+    (39) expr2 -> . expr2 - factor
+    (40) expr2 -> . expr2 + factor
+    (41) expr2 -> . factor
+    (42) lval -> . ID [ expr ]
+    (43) lval -> . ID
+    (46) factor -> . FALSE
+    (47) factor -> . TRUE
+    (48) factor -> . STRING_LITERAL
+    (49) factor -> . CHAR_LITERAL
+    (50) factor -> . FLOAT_LITERAL
+    (51) factor -> . INT_LITERAL
+    (52) factor -> . ID
+    {               shift and go to state 52
+    PRINT           shift and go to state 66
+    RETURN          shift and go to state 67
+    FOR             shift and go to state 134
+    ID              shift and go to state 51
+    IF              shift and go to state 70
+    FALSE           shift and go to state 40
+    TRUE            shift and go to state 41
+    STRING_LITERAL  shift and go to state 42
+    CHAR_LITERAL    shift and go to state 43
+    FLOAT_LITERAL   shift and go to state 44
+    INT_LITERAL     shift and go to state 45
+
+    if_cond                        shift and go to state 153
+    closed_stmt                    shift and go to state 132
+    simple_stmt                    shift and go to state 59
+    for_stmt_closed                shift and go to state 60
+    if_stmt_closed                 shift and go to state 61
+    expr                           shift and go to state 64
+    decl                           shift and go to state 65
+    expr1                          shift and go to state 36
+    decl_init                      shift and go to state 5
+    expr2                          shift and go to state 37
+    lval                           shift and go to state 38
+    factor                         shift and go to state 39
+
+Conflicts:
+
+reduce/reduce conflict in state 147 resolved using rule stmt -> closed_stmt
+rejected rule (for_stmt_closed -> FOR ( opt_expr ; opt_expr ; opt_expr ) closed_stmt) in state 147
